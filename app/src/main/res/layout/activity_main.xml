@@ -39,7 +39,7 @@
         app:layout_constraintBottom_toTopOf="@id/btn_add_reminder"
         app:layout_constraintTop_toBottomOf="@id/title_txt"
         app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="0dp">
+        tools:layout_editor_absoluteX="8dp">
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -48,7 +48,85 @@
             android:orientation="vertical">
 
             <!-- The reminder views will be added here programmatically -->
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/name_text_view2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Module name"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/info_text_view2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Module description"
+                    android:textSize="20sp" />
+
+                <!-- Add a new TextView to display the completed status -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/complete_button2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Complete"
+                        android:text="Learn" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/name_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Module name"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/info_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Module description"
+                    android:textSize="20sp" />
+
+                <!-- Add a new TextView to display the completed status -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/complete_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Complete"
+                        android:text="Learn" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -58,17 +136,17 @@
                     android:id="@+id/name_text_view1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:text="Module name"
-                    android:textSize="30sp"
-                    android:layout_marginStart="8dp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/info_text_view1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:layout_marginStart="8dp"
                     android:text="Module description"
-                    android:layout_marginStart="8dp" />
+                    android:textSize="20sp" />
 
                 <!-- Add a new TextView to display the completed status -->
                 <LinearLayout
@@ -82,91 +160,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="Complete"
-                        android:text="Learn"
-                        />
+                        android:text="Learn" />
                 </LinearLayout>
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/name_text_view2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Module name"
-                        android:textSize="30sp"
-                        android:layout_marginStart="8dp" />
-
-                    <TextView
-                        android:id="@+id/info_text_view2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:text="Module description"
-                        android:layout_marginStart="8dp" />
-
-                    <!-- Add a new TextView to display the completed status -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/complete_button2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="Complete"
-                            android:text="Learn"
-                            />
-                    </LinearLayout>
-                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/name_text_view"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Module name"
-                            android:textSize="30sp"
-                            android:layout_marginStart="8dp" />
-
-                        <TextView
-                            android:id="@+id/info_text_view"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="20sp"
-                            android:text="Module description"
-                            android:layout_marginStart="8dp" />
-
-                        <!-- Add a new TextView to display the completed status -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="end"
-                            android:orientation="horizontal">
-
-                            <Button
-                                android:id="@+id/complete_button"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:contentDescription="Complete"
-                                android:text="Learn"
-                                />
-                        </LinearLayout>
-
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
     </ScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
