@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">LanguageLearning</string>
+    <string name="modules_header">Available modules</string>
+    <string name="add_title">Add new module</string>
+    <string name="title_hint">Enter module name</string>
+    <string name="description_hint">Enter module description</string>
+    <string name="empty_page">No modules</string>
+</resources>
