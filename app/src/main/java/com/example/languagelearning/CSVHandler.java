@@ -1,4 +1,7 @@
 package com.example.languagelearning;
+import android.content.Context;
+import android.content.res.AssetManager;
+
 import java.io.*;
 import java.util.*;
 
@@ -37,10 +40,9 @@ public class CSVHandler {
 
         try {
             // Create a file reader object
-            FileReader reader = new FileReader(fileName);
 
             // Create a buffered reader object to read line by line
-            BufferedReader bufferedReader = new BufferedReader(reader);
+            BufferedReader bufferedReader = new BufferedReader(assets.open("data.csv").reader());
 
             // Skip the header row
             bufferedReader.readLine();
@@ -79,7 +81,7 @@ public class CSVHandler {
         // Loop through the list of words and check their group
         for (Word word : words) {
             // If the word's group matches the given group, add it to the result list
-            if (word.getGroup().equals(group)) {
+            if (word.getModule().equals(group)) {
                 result.add(word);
             }
         }

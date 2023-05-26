@@ -2,10 +2,14 @@ package com.example.languagelearning;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.io.InputStream;
 
 public class AddModule extends AppCompatActivity {
 
@@ -20,6 +24,9 @@ public class AddModule extends AppCompatActivity {
         Button submitButton = findViewById(R.id.btn_submit);
         button.setOnClickListener(v -> openReminderAddActivity());
         submitButton.setOnClickListener(v -> serializeForm());
+        Context context = getApplicationContext();
+        AssetManager assets = context.getAssets();
+        InputStream inputStream = assets.open("data.csv");
     }
     public void openReminderAddActivity() {
         Intent intent = new Intent(this, MainActivity.class);
