@@ -79,7 +79,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/complete_button2"
+                        android:id="@+id/learn1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="Complete"
@@ -117,7 +117,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/complete_button"
+                        android:id="@+id/learn2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="Complete"
@@ -156,10 +156,10 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/complete_button1"
+                        android:id="@+id/learn3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:contentDescription="Complete"
+                        android:contentDescription="learn3"
                         android:text="Learn" />
                 </LinearLayout>
 
