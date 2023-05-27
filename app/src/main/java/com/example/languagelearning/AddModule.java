@@ -1,12 +1,9 @@
 package com.example.languagelearning;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 
-import android.content.Context;
+
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +11,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.InputStream;
 
 public class AddModule extends AppCompatActivity {
 
@@ -87,6 +83,10 @@ public class AddModule extends AppCompatActivity {
         return button;
     }
     private void serializeForm() {
+        EditText moduleNameEditText = (EditText) findViewById(R.id.name_edit);
+        EditText moduleDescriptionEditText = (EditText) findViewById(R.id.description_edit);
+        String moduleName = moduleNameEditText.getText().toString();
+        String moduleDescription = moduleDescriptionEditText.getText().toString();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < mLayout.getChildCount(); i++) {
             View view = mLayout.getChildAt(i);

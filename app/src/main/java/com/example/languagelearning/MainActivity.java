@@ -16,8 +16,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button button_add = findViewById(R.id.add_module);
         button_add.setOnClickListener(v -> addNewModule());
-        // Button button_learn = findViewById(R.id.learn);
-        // button_learn.setOnClickListener(v -> startLearning());
         createNewModule();
         createNewModule();
         createNewModule();
@@ -82,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         newModuleLayout.addView(textLayout);
         newModuleLayout.addView(learnButton);
-
+        learnButton.setOnClickListener(v -> startLearning());
         parentLayout.addView(newModuleLayout, 1); // Change the index to add below a specific module
 
     }
