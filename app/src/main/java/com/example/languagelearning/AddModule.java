@@ -30,6 +30,8 @@ public class AddModule extends AppCompatActivity {
         mLayout = (LinearLayout) findViewById(R.id.layout);
         mButton = (Button) findViewById(R.id.new_button);
         mSubmitButton = (Button) findViewById(R.id.submit_button);
+        Button exitBtn = findViewById(R.id.exit_btn);
+        exitBtn.setOnClickListener(v -> exit());
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,5 +97,9 @@ public class AddModule extends AppCompatActivity {
         }
         System.out.println("Form Data");
         System.out.println(sb);
+    }
+    private void exit(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
