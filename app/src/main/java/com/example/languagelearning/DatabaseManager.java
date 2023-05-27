@@ -56,5 +56,10 @@ public class DatabaseManager {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         return db.rawQuery("SELECT * FROM Card", null);
     }
+    public void deleteModule(String moduleName) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete("Module", "module_name=?", new String[]{moduleName});
+        db.close();
+    }
 }
 

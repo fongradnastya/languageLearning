@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.content.Intent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    DatabaseManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button button_add = findViewById(R.id.add_module);
         button_add.setOnClickListener(v -> addNewModule());
-        DatabaseManager manager = new DatabaseManager(this);
+        manager = new DatabaseManager(this);
         List<Module> modules = manager.getAllModules();
         for(Module module : modules){
             createNewModule(module);
@@ -26,9 +29,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addNewModule() {
-        //List<Module> modules;
         Intent intent = new Intent(this, AddModule.class);
-        //intent.putParcelableArrayListExtra("module", modules);
         startActivity(intent);
     }
 
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     public void createNewModule(Module module){
         LinearLayout parentLayout = (LinearLayout) findViewById(R.id.layout);
         LinearLayout newModuleLayout = new LinearLayout(this);
+        newModuleLayout.setTag(module.getModuleName());
+        newModuleLayout.setBackgroundColor(0xFFBB86FC);
         newModuleLayout.setOrientation(LinearLayout.HORIZONTAL);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -54,38 +57,45 @@ public class MainActivity extends AppCompatActivity {
                 1.0f);
         textLayout.setLayoutParams(textLayoutParams);
 
-        TextView nameTextView = new TextView(this);
-        nameTextView.setText(module.getModuleName());
-        nameTextView.setTextSize(30);
-        LinearLayout.LayoutParams nameTextViewParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        nameTextViewParams.setMarginStart(8);
-        nameTextView.setLayoutParams(nameTextViewParams);
-
-        TextView infoTextView = new TextView(this);
-        infoTextView.setText(module.getModuleDescription());
-        infoTextView.setTextSize(20);
-        LinearLayout.LayoutParams infoTextViewParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        infoTextViewParams.setMarginStart(8);
-        infoTextView.setLayoutParams(infoTextViewParams);
-
+        TextView nameTextView = createTextView(module.getModuleName(), 30);
+        TextView infoTextView = createTextView(module.getModuleDescription(), 20);
         textLayout.addView(nameTextView);
         textLayout.addView(infoTextView);
-
-        Button learnButton = new Button(this);
-        learnButton.setText("Learn");
+        Button learnButton = createButton("Learn");
+        Button deleteButton = createButton("X");
+        newModuleLayout.addView(textLayout);
+        newModuleLayout.addView(learnButton);
+        newModuleLayout.addView(deleteButton);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseManager databaseManager = new DatabaseManager(MainActivity.this);
+                databaseManager.deleteModule(module.getModuleName());
+                ((ViewGroup) newModuleLayout.getParent()).removeView(newModuleLayout);
+            }
+        });
+        learnButton.setOnClickListener(v -> startLearning());
+        parentLayout.addView(newModuleLayout, 1);
+    }
+    private Button createButton(String text){
+        Button button = new Button(this);
+        button.setText(text);
         LinearLayout.LayoutParams learnButtonParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         learnButtonParams.topMargin = 10;
-        learnButton.setLayoutParams(learnButtonParams);
-        newModuleLayout.addView(textLayout);
-        newModuleLayout.addView(learnButton);
-        learnButton.setOnClickListener(v -> startLearning());
-        parentLayout.addView(newModuleLayout, 1); // Change the index to add below a specific module
-
+        button.setLayoutParams(learnButtonParams);
+        return button;
+    }
+    private TextView createTextView(String text, int textSize){
+        TextView textView = new TextView(this);
+        textView.setText(text);
+        textView.setTextSize(textSize);
+        LinearLayout.LayoutParams nameTextViewParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        nameTextViewParams.setMarginStart(10);
+        textView.setLayoutParams(nameTextViewParams);
+        return textView;
     }
 }
