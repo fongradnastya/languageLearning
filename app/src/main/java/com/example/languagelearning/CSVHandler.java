@@ -34,7 +34,7 @@ public class CSVHandler {
     }
 
     // A method to read data from a csv file and return a list of words
-    public static List<Word> readData(String fileName) {
+    public static List<Word> readData(BufferedReader bufferedReader) {
         // Create an empty list to store the words
         List<Word> words = new ArrayList<>();
 
@@ -42,8 +42,7 @@ public class CSVHandler {
             // Create a file reader object
 
             // Create a buffered reader object to read line by line
-            BufferedReader bufferedReader = new BufferedReader(assets.open("data.csv").reader());
-
+            //BufferedReader bufferedReader = new BufferedReader(assets.open("data.csv").reader());
             // Skip the header row
             bufferedReader.readLine();
 

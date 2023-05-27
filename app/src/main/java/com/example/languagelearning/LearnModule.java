@@ -20,7 +20,7 @@ public class LearnModule extends AppCompatActivity {
         button_exit.setOnClickListener(v -> exit());
         Button button_translate = findViewById(R.id.translate);
         button_translate.setOnClickListener(v -> showTranslation());
-        CSVHandler.readData("")
+        //CSVHandler.readData("");
     }
 
     public void exit(){
