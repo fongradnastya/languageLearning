@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,8 +17,9 @@ public class AddModule extends AppCompatActivity {
 
     private LinearLayout mLayout;
     private Button mButton;
-
     private Button mSubmitButton;
+
+    private ModuleFactory moduleFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class AddModule extends AppCompatActivity {
         mSubmitButton = (Button) findViewById(R.id.submit_button);
         Button exitBtn = findViewById(R.id.exit_btn);
         exitBtn.setOnClickListener(v -> exit());
+        moduleFactory = new ModuleFactory();
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,6 +42,7 @@ public class AddModule extends AppCompatActivity {
                 mLayout.addView(createNewButton(), index + 3);
             }
         });
+        mSubmitButton.setOnClickListener(v -> serializeForm());
     }
     private EditText createNewEditText(String hint_text) {
         final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
@@ -87,16 +91,12 @@ public class AddModule extends AppCompatActivity {
         EditText moduleDescriptionEditText = (EditText) findViewById(R.id.description_edit);
         String moduleName = moduleNameEditText.getText().toString();
         String moduleDescription = moduleDescriptionEditText.getText().toString();
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < mLayout.getChildCount(); i++) {
-            View view = mLayout.getChildAt(i);
-            if (view instanceof EditText) {
-                sb.append(((EditText) view).getText().toString());
-                sb.append("\n");
-            }
-        }
-        System.out.println("Form Data");
-        System.out.println(sb);
+
+        Module newModule = moduleFactory.createModule(moduleName, moduleDescription);
+        DatabaseManager manager = new DatabaseManager(this);
+        manager.insertModule(newModule);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
     private void exit(){
         Intent intent = new Intent(this, MainActivity.class);

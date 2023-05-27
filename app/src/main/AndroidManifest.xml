@@ -15,9 +15,6 @@
             android:name=".LearnModule"
             android:exported="false" />
         <activity
-            android:name=".ModuleActivity"
-            android:exported="false" />
-        <activity
             android:name=".AddModule"
             android:exported="false" />
         <activity

@@ -7,10 +7,10 @@ public class Module {
     private String moduleDescription;
     private List<FlashCard> flashCards;
 
-    public Module(String moduleName, String moduleDescription, List<FlashCard> flashCards) {
+    public Module(String moduleName, String moduleDescription) {
         this.moduleName = moduleName;
         this.moduleDescription = moduleDescription;
-        this.flashCards = flashCards;
+        this.flashCards = null;
     }
 
     public String getModuleName() {

@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -16,14 +18,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button button_add = findViewById(R.id.add_module);
         button_add.setOnClickListener(v -> addNewModule());
-        createNewModule();
-        createNewModule();
-        createNewModule();
-        createNewModule();
+        DatabaseManager manager = new DatabaseManager(this);
+        List<Module> modules = manager.getAllModules();
+        for(Module module : modules){
+            createNewModule(module);
+        }
     }
 
     public void addNewModule() {
+        //List<Module> modules;
         Intent intent = new Intent(this, AddModule.class);
+        //intent.putParcelableArrayListExtra("module", modules);
         startActivity(intent);
     }
 
@@ -32,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void createNewModule(){
+    public void createNewModule(Module module){
         LinearLayout parentLayout = (LinearLayout) findViewById(R.id.layout);
         LinearLayout newModuleLayout = new LinearLayout(this);
         newModuleLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -50,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         textLayout.setLayoutParams(textLayoutParams);
 
         TextView nameTextView = new TextView(this);
-        nameTextView.setText("New Module Name");
+        nameTextView.setText(module.getModuleName());
         nameTextView.setTextSize(30);
         LinearLayout.LayoutParams nameTextViewParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -59,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         nameTextView.setLayoutParams(nameTextViewParams);
 
         TextView infoTextView = new TextView(this);
-        infoTextView.setText("New Module Description");
+        infoTextView.setText(module.getModuleDescription());
         infoTextView.setTextSize(20);
         LinearLayout.LayoutParams infoTextViewParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -77,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         learnButtonParams.topMargin = 10;
         learnButton.setLayoutParams(learnButtonParams);
-
         newModuleLayout.addView(textLayout);
         newModuleLayout.addView(learnButton);
         learnButton.setOnClickListener(v -> startLearning());
