@@ -54,6 +54,21 @@ public class DatabaseManager {
         db.close();
         return modules;
     }
+    public Module getModuleByName(String moduleName) {
+        Module module = null;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Module WHERE module_name = ?", new String[]{moduleName});
+
+        if (cursor.moveToFirst()) {
+            List<Word> words = getCardsByModule(moduleName);
+            @SuppressLint("Range") String moduleDescription = cursor.getString(
+                    cursor.getColumnIndex("module_description"));
+            module = new Module(moduleName, moduleDescription, words);
+        }
+        cursor.close();
+        db.close();
+        return module;
+    }
 
     public List<Word> getAllCards() {
         List<Word> words = new ArrayList<>();

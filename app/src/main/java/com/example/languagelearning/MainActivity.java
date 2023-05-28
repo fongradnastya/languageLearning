@@ -13,11 +13,14 @@ import android.widget.TextView;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    DatabaseManager manager;
+    private DatabaseManager manager;
+    private int modulesCnt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        modulesCnt = 0;
         setContentView(R.layout.activity_main);
         Button button_add = findViewById(R.id.add_module);
         button_add.setOnClickListener(v -> addNewModule());
@@ -33,12 +36,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void startLearning(){
-        Intent intent = new Intent(this, LearnModule.class);
-        startActivity(intent);
-    }
-
     public void createNewModule(Module module){
+        modulesCnt += 1;
         LinearLayout parentLayout = (LinearLayout) findViewById(R.id.layout);
         LinearLayout newModuleLayout = new LinearLayout(this);
         newModuleLayout.setTag(module.getModuleName());
@@ -74,7 +73,14 @@ public class MainActivity extends AppCompatActivity {
                 ((ViewGroup) newModuleLayout.getParent()).removeView(newModuleLayout);
             }
         });
-        learnButton.setOnClickListener(v -> startLearning());
+        learnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LearnModule.class);
+                intent.putExtra("moduleName", module.getModuleName());
+                startActivity(intent);
+            }
+        });
         parentLayout.addView(newModuleLayout, 1);
     }
     private Button createButton(String text){

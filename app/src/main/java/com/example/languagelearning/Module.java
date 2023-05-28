@@ -5,6 +5,7 @@ import java.util.List;
 public class Module {
     private String moduleName;
     private String moduleDescription;
+
     private List<Word> flashCards;
 
     public Module(String moduleName, String moduleDescription, List<Word> flashCards) {
@@ -36,5 +37,6 @@ public class Module {
     public void setFlashCards(List<Word> flashCards) {
         this.flashCards = flashCards;
     }
+
 }
 
