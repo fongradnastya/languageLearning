@@ -52,17 +52,11 @@ public class FlashCard {
 
     private LocalDateTime lastTime;
 
-    private boolean isHidden;
-
     private FlashCardState state;
 
     private LocalDateTime nextShowTime;
 
     private Word word;
-
-    public boolean getIsHidden(){
-        return isHidden;
-    }
 
     public FlashCard(Word word) {
         state = new FrontSide();
@@ -70,12 +64,15 @@ public class FlashCard {
         responseNumber = 0;
         lastAnswer = null;
         lastTime = null;
-        isHidden = true;
         nextShowTime = LocalDateTime.now();
     }
 
     public void setState(FlashCardState state) {
         this.state = state;
+    }
+
+    public String getStringValue(){
+        return state.getValue();
     }
 
     public boolean isReadyToShow() {
@@ -96,9 +93,6 @@ public class FlashCard {
 
     public Word getWord(){
         return word;
-    }
-    public void flipCard(){
-        isHidden = !isHidden;
     }
 
     public void addResponse(String lastAnswer){

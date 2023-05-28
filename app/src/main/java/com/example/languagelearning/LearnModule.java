@@ -9,20 +9,18 @@ import android.widget.TextView;
 
 public class LearnModule extends AppCompatActivity {
 
-    private boolean isHidden;
-
     private TrainingSession trainingSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learn_module);
-        this.isHidden = true;
         setLearningModule();
         Button button_exit = findViewById(R.id.exit);
         button_exit.setOnClickListener(v -> exit());
         Button button_translate = findViewById(R.id.translate);
-        button_translate.setOnClickListener(v -> showTranslation());
+        button_translate.setOnClickListener(v -> flipCard());
+        showWord();
         processAnswers();
     }
 
@@ -36,9 +34,6 @@ public class LearnModule extends AppCompatActivity {
     }
 
     public void showNewCard(){
-        if(!trainingSession.getCurrentCard().getIsHidden()){
-            showTranslation();
-        }
         FlashCard card = trainingSession.getNextCard();
         if(card == null){
             exit();
@@ -57,12 +52,13 @@ public class LearnModule extends AppCompatActivity {
         if(module != null){
             trainingSession = new TrainingSession(module);
         }
-        setModuleName(moduleName);
+        setModuleName();
         setCardNumber();
         showWord();
     }
 
-    public void setModuleName(String moduleName){
+    public void setModuleName(){
+        String moduleName = trainingSession.getCardData();
         if(moduleName != null){
             TextView header = findViewById(R.id.module_name);
             header.setText(moduleName);
@@ -90,19 +86,9 @@ public class LearnModule extends AppCompatActivity {
         text.setText(word.getWord());
     }
 
-    public void showTranslation(){
-        TextView text = findViewById(R.id.translation);
-        Button button_translate = findViewById(R.id.translate);
+    public void flipCard(){
         FlashCard card = trainingSession.getCurrentCard();
-        Word word = card.getWord();
-        if (card.getIsHidden()){
-            text.setText(word.getTranslation());
-            button_translate.setText("Hide");
-        }
-        else{
-            text.setText("");
-            button_translate.setText("Translate");
-        }
-        card.flipCard();
+        card.flip();
+        showWord();
     }
 }

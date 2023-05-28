@@ -97,7 +97,7 @@ public class AddModule extends AppCompatActivity {
         String moduleName = strings.get(0);
         String moduleDescription = strings.get(1);
         List<Word> words = new ArrayList<>();
-        for (int i = 2; i <= wordsNumber + 2; i += 2) {
+        for (int i = 2; i <= wordsNumber * 2; i += 2) {
             Word word = new Word(strings.get(i), strings.get(i + 1), moduleName);
             words.add(word);
         }

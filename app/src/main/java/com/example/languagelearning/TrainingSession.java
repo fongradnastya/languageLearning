@@ -30,6 +30,11 @@ public class TrainingSession {
         }
     }
 
+    public String getCardData(){
+        FlashCard card = (FlashCard) iterator.next();
+        return card.getStringValue();
+    }
+
     public FlashCard getNextCard(){
         if(currentCardId + 1 < cardsToLearn.size()){
             currentCardId += 1;

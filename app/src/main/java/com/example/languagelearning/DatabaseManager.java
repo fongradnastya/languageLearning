@@ -125,6 +125,7 @@ public class DatabaseManager {
 
     public void deleteModule(String moduleName) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete("Card", "module=?", new String[]{moduleName});
         db.delete("Module", "module_name=?", new String[]{moduleName});
         db.close();
     }
