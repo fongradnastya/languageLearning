@@ -6,6 +6,8 @@ import java.util.List;
 public class TrainingSession {
     private Module learningModule;
     private List<FlashCard> cardsToLearn;
+
+    private FlashCardIterator iterator;
     private int currentCardId;
 
     public TrainingSession(Module learningModule) {
@@ -17,11 +19,15 @@ public class TrainingSession {
             cardsToLearn.add(card);
         }
         currentCardId = 0;
+        iterator = new FlashCardIterator(cardsToLearn);
     }
 
     public void saveAnswer(String response){
         FlashCard card = getCurrentCard();
         card.addResponse(response);
+        if(response.equals("forgot")){
+            iterator.moveToBack(card);
+        }
     }
 
     public FlashCard getNextCard(){

@@ -71,10 +71,15 @@ public class FlashCard {
         lastAnswer = null;
         lastTime = null;
         isHidden = true;
+        nextShowTime = LocalDateTime.now();
     }
 
     public void setState(FlashCardState state) {
         this.state = state;
+    }
+
+    public boolean isReadyToShow() {
+        return LocalDateTime.now().isAfter(nextShowTime);
     }
 
     public void calculateNextShowTime() {
@@ -100,6 +105,12 @@ public class FlashCard {
         this.lastAnswer = lastAnswer;
         responseNumber += 1;
         lastTime = LocalDateTime.now();
-
+        calculateNextShowTime();
+        if(!lastAnswer.equals("forgot")){
+            calculateNextShowTime();
+        }
+        else{
+            nextShowTime = LocalDateTime.now();
+        }
     }
 }
