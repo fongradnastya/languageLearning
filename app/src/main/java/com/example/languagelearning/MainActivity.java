@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout parentLayout = (LinearLayout) findViewById(R.id.layout);
         LinearLayout newModuleLayout = new LinearLayout(this);
         newModuleLayout.setTag(module.getModuleName());
-        newModuleLayout.setBackgroundColor(0xFFBB86FC);
+        // newModuleLayout.setBackgroundColor(0xFFBB86FC);
         newModuleLayout.setOrientation(LinearLayout.HORIZONTAL);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,

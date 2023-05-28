@@ -19,11 +19,16 @@ public class TrainingSession {
         currentCardId = 0;
     }
 
+    public void saveAnswer(String response){
+        FlashCard card = getCurrentCard();
+        card.addResponse(response);
+    }
+
     public FlashCard getNextCard(){
         if(currentCardId + 1 < cardsToLearn.size()){
             currentCardId += 1;
-            FlashCard newWord = cardsToLearn.get(currentCardId);
-            return newWord;
+            FlashCard newCard = cardsToLearn.get(currentCardId);
+            return newCard;
         }
         return null;
     }

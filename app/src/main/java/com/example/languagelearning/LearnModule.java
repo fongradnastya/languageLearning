@@ -30,9 +30,23 @@ public class LearnModule extends AppCompatActivity {
         Button difficultAnswer = findViewById(R.id.difficult);
         Button forgotAnswer = findViewById(R.id.forgot);
         Button easyAnswer = findViewById(R.id.easy);
-        difficultAnswer.setOnClickListener(v -> trainingSession.getNextCard());
-        forgotAnswer.setOnClickListener(v -> trainingSession.getNextCard());
-        easyAnswer.setOnClickListener(v -> trainingSession.getNextCard());
+        difficultAnswer.setOnClickListener(v -> showNewCard());
+        forgotAnswer.setOnClickListener(v -> showNewCard());
+        easyAnswer.setOnClickListener(v -> showNewCard());
+    }
+
+    public void showNewCard(){
+        if(!trainingSession.getCurrentCard().getIsHidden()){
+            showTranslation();
+        }
+        FlashCard card = trainingSession.getNextCard();
+        if(card == null){
+            exit();
+        }
+        else {
+            setCardNumber();
+            showWord();
+        }
     }
 
     public void setLearningModule(){
