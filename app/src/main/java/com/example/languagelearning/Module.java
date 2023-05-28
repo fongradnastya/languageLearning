@@ -5,12 +5,12 @@ import java.util.List;
 public class Module {
     private String moduleName;
     private String moduleDescription;
-    private List<FlashCard> flashCards;
+    private List<Word> flashCards;
 
-    public Module(String moduleName, String moduleDescription) {
+    public Module(String moduleName, String moduleDescription, List<Word> flashCards) {
         this.moduleName = moduleName;
         this.moduleDescription = moduleDescription;
-        this.flashCards = null;
+        this.flashCards = flashCards;
     }
 
     public String getModuleName() {
@@ -29,11 +29,11 @@ public class Module {
         this.moduleDescription = moduleDescription;
     }
 
-    public List<FlashCard> getFlashCards() {
+    public List<Word> getFlashCards() {
         return flashCards;
     }
 
-    public void setFlashCards(List<FlashCard> flashCards) {
+    public void setFlashCards(List<Word> flashCards) {
         this.flashCards = flashCards;
     }
 }

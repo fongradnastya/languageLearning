@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class AddModule extends AppCompatActivity {
 
@@ -21,8 +24,11 @@ public class AddModule extends AppCompatActivity {
 
     private ModuleFactory moduleFactory;
 
+    private int wordsNumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        wordsNumber = 0;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_module);
         mLayout = (LinearLayout) findViewById(R.id.layout);
@@ -31,18 +37,16 @@ public class AddModule extends AppCompatActivity {
         Button exitBtn = findViewById(R.id.exit_btn);
         exitBtn.setOnClickListener(v -> exit());
         moduleFactory = new ModuleFactory();
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Add two EditText views
-                int index = mLayout.indexOfChild(mSubmitButton);
-                mLayout.addView(createNewText("Card"), index);
-                mLayout.addView(createNewEditText("The word"), index + 1);
-                mLayout.addView(createNewEditText("The translation"), index + 2);
-                mLayout.addView(createNewButton(), index + 3);
-            }
-        });
+        mButton.setOnClickListener(v -> addNewWord());
         mSubmitButton.setOnClickListener(v -> serializeForm());
+    }
+    private void addNewWord(){
+        int index = mLayout.indexOfChild(mSubmitButton);
+        mLayout.addView(createNewText("Card"), index);
+        mLayout.addView(createNewEditText("The word"), index + 1);
+        mLayout.addView(createNewEditText("The translation"), index + 2);
+        mLayout.addView(createNewButton(), index + 3);
+        wordsNumber += 1;
     }
     private EditText createNewEditText(String hint_text) {
         final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
@@ -87,16 +91,37 @@ public class AddModule extends AppCompatActivity {
         return button;
     }
     private void serializeForm() {
-        EditText moduleNameEditText = (EditText) findViewById(R.id.name_edit);
-        EditText moduleDescriptionEditText = (EditText) findViewById(R.id.description_edit);
-        String moduleName = moduleNameEditText.getText().toString();
-        String moduleDescription = moduleDescriptionEditText.getText().toString();
-
-        Module newModule = moduleFactory.createModule(moduleName, moduleDescription);
         DatabaseManager manager = new DatabaseManager(this);
-        manager.insertModule(newModule);
+
+        List<String> strings = getAllValues();
+        String moduleName = strings.get(0);
+        String moduleDescription = strings.get(1);
+        List<Word> words = new ArrayList<>();
+        for (int i = 2; i < wordsNumber + 2; i += 2) {
+            Word word = new Word(strings.get(i), strings.get(i + 1), moduleName);
+            words.add(word);
+        }
+        System.out.println(words);
+        Module newModule = moduleFactory.createModule(moduleName, moduleDescription, words);
+        if (newModule != null){
+            manager.insertModule(newModule);
+        }
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    private List<String> getAllValues(){
+        List<String> values = new ArrayList<>();
+        LinearLayout rootView = (LinearLayout) findViewById(R.id.layout);
+        for (int i = 0; i < rootView.getChildCount(); i++) {
+            View view = rootView.getChildAt(i);
+            if (view instanceof EditText) {
+                EditText editText = (EditText) view;
+                String text = editText.getText().toString();
+                values.add(text);
+            }
+        }
+        return values;
     }
     private void exit(){
         Intent intent = new Intent(this, MainActivity.class);

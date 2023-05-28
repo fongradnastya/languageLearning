@@ -25,12 +25,12 @@ public class DatabaseManager {
         db.close();
     }
 
-    public void insertCard(String word, String translation, int module) {
+    public void insertCard(Word word) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("word", word);
-        values.put("translation", translation);
-        values.put("module", module);
+        values.put("word", word.getWord());
+        values.put("translation", word.getTranslation());
+        values.put("module", word.getModule());
         db.insert("Card", null, values);
         db.close();
     }
@@ -42,9 +42,12 @@ public class DatabaseManager {
 
         if (cursor.moveToFirst()) {
             do {
-                @SuppressLint("Range") String moduleName = cursor.getString(cursor.getColumnIndex("module_name"));
-                @SuppressLint("Range") String moduleDescription = cursor.getString(cursor.getColumnIndex("module_description"));
-                modules.add(new Module(moduleName, moduleDescription));
+                @SuppressLint("Range") String moduleName = cursor.getString(
+                        cursor.getColumnIndex("module_name"));
+                List<Word> words = getCardsByModule(moduleName);
+                @SuppressLint("Range") String moduleDescription = cursor.getString(
+                        cursor.getColumnIndex("module_description"));
+                modules.add(new Module(moduleName, moduleDescription, words));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -52,10 +55,46 @@ public class DatabaseManager {
         return modules;
     }
 
-    public Cursor getAllCards() {
+    public List<Word> getAllCards() {
+        List<Word> words = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM Card", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Card", null);
+        if (cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") String word = cursor.getString(
+                        cursor.getColumnIndex("word"));
+                @SuppressLint("Range") String translation = cursor.getString(
+                        cursor.getColumnIndex("translation"));
+                @SuppressLint("Range") String module = cursor.getString(
+                        cursor.getColumnIndex("module"));
+                words.add(new Word(word, translation, module));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return words;
     }
+    public List<Word> getCardsByModule(String moduleName) {
+        List<Word> words = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Card WHERE module = ?",
+                new String[]{moduleName});
+        if (cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") String word = cursor.getString(
+                        cursor.getColumnIndex("word"));
+                @SuppressLint("Range") String translation = cursor.getString(
+                        cursor.getColumnIndex("translation"));
+                @SuppressLint("Range") String module = cursor.getString(
+                        cursor.getColumnIndex("module"));
+                words.add(new Word(word, translation, module));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return words;
+    }
+
     public void deleteModule(String moduleName) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete("Module", "module_name=?", new String[]{moduleName});

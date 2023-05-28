@@ -11,16 +11,17 @@ public class ModuleFactory {
         moduleNames = new HashSet<>();
     }
 
-    public Module createModule(String moduleName, String moduleDescription) {
+    public Module createModule(String moduleName, String moduleDescription,
+                               List<Word> flashCards) {
         if (moduleNames.contains(moduleName)) {
-            throw new IllegalArgumentException("Module name already exists");
+            return null;
         }
 
-        // if (flashCards == null || flashCards.isEmpty()) {
-            //throw new IllegalArgumentException("Module must have at least one FlashCard");
-        //}
+        if (flashCards == null || flashCards.isEmpty()) {
+            return null;
+        }
 
         moduleNames.add(moduleName);
-        return new Module(moduleName, moduleDescription);
+        return new Module(moduleName, moduleDescription, flashCards);
     }
 }
