@@ -23,6 +23,16 @@ public class LearnModule extends AppCompatActivity {
         button_exit.setOnClickListener(v -> exit());
         Button button_translate = findViewById(R.id.translate);
         button_translate.setOnClickListener(v -> showTranslation());
+        processAnswers();
+    }
+
+    public void processAnswers(){
+        Button difficultAnswer = findViewById(R.id.difficult);
+        Button forgotAnswer = findViewById(R.id.forgot);
+        Button easyAnswer = findViewById(R.id.easy);
+        difficultAnswer.setOnClickListener(v -> trainingSession.getNextCard());
+        forgotAnswer.setOnClickListener(v -> trainingSession.getNextCard());
+        easyAnswer.setOnClickListener(v -> trainingSession.getNextCard());
     }
 
     public void setLearningModule(){
@@ -35,6 +45,7 @@ public class LearnModule extends AppCompatActivity {
         }
         setModuleName(moduleName);
         setCardNumber();
+        showWord();
     }
 
     public void setModuleName(String moduleName){
@@ -58,17 +69,26 @@ public class LearnModule extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void showWord(){
+        TextView text = findViewById(R.id.word);
+        FlashCard card = trainingSession.getCurrentCard();
+        Word word = card.getWord();
+        text.setText(word.getWord());
+    }
+
     public void showTranslation(){
         TextView text = findViewById(R.id.translation);
         Button button_translate = findViewById(R.id.translate);
-        if (this.isHidden){
-            text.setText("Translation");
+        FlashCard card = trainingSession.getCurrentCard();
+        Word word = card.getWord();
+        if (card.getIsHidden()){
+            text.setText(word.getTranslation());
             button_translate.setText("Hide");
         }
         else{
             text.setText("");
             button_translate.setText("Translate");
         }
-        this.isHidden = ! this.isHidden;
+        card.flipCard();
     }
 }

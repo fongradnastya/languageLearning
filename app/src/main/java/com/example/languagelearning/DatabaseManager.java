@@ -35,6 +35,19 @@ public class DatabaseManager {
         db.close();
     }
 
+    public void insertCards(List<Word> words) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        for (Word word : words) {
+            ContentValues values = new ContentValues();
+            values.put("word", word.getWord());
+            values.put("translation", word.getTranslation());
+            values.put("module", word.getModule());
+            db.insert("Card", null, values);
+        }
+        db.close();
+    }
+
+
     public List<Module> getAllModules() {
         List<Module> modules = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -64,12 +77,12 @@ public class DatabaseManager {
             @SuppressLint("Range") String moduleDescription = cursor.getString(
                     cursor.getColumnIndex("module_description"));
             module = new Module(moduleName, moduleDescription, words);
+            System.out.println(words);
         }
         cursor.close();
         db.close();
         return module;
     }
-
     public List<Word> getAllCards() {
         List<Word> words = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
